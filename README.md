@@ -18,7 +18,11 @@ Simply copy and paste this command, enter the number of IPs you need and that's 
 curl -sSL https://raw.githubusercontent.com/arshiacomplus/Quick_Warp_on_Warp/main/install.sh -o install.sh && chmod +x install.sh && bash install.sh
 
 ```
-    
+
+or 
+```bash
+bash <(curl -fsSL https://raw.githubusercontent.com/arshiacomplus/Quick_Warp_on_Warp/main/install.sh)
+```
 ## ⚡ Implementation requirements
 
 **Termux:** Terminal Simulator app [Github](https://github.com/termux/termux-app/releases/tag/v0.118.0), [Website](https://termux.dev/en/) , [F-Droid](https://github.com/termux/termux-app#f-droid)
