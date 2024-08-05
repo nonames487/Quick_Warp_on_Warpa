@@ -7,6 +7,9 @@ CYAN=$(tput setaf 6)
 RED=$(tput setaf 1)
 RESET=$(tput sgr0)
 if [ -f python_key.py ]; then
+    pkg install python-pip
+    pkg install curl
+    
     first_line=$(head -n 1 python_key.py)
     if [ "$first_line" != "V=1" ]; then
         rm python_key.py
