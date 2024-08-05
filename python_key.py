@@ -1,4 +1,4 @@
-V=1
+V=22
 import json
 import base64
 import os
@@ -51,7 +51,7 @@ except ModuleNotFoundError:
     os.system('python setup.py install')
     import requests
 
-time.sleep(5)
+time.sleep(10)
 def byte_to_base64(myb):
     return base64.b64encode(myb).decode('utf-8')
 def generate_public_key(key_bytes):
