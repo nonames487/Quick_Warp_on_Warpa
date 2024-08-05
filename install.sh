@@ -11,7 +11,7 @@ if [ -f python_key.py ]; then
     pkg install curl
     
     first_line=$(head -n 1 python_key.py)
-    if [ "$first_line" != "V=1" ]; then
+    if [ "$first_line" != "V=22" ]; then
         rm python_key.py
         echo "Updating python_key.py..."
         curl -fsSL -o python_key.py https://raw.githubusercontent.com/arshiacomplus/Quick_Warp_on_Warp/main/python_key.py || { echo \"Failed to download python_key.py. Exiting.\"; exit 1; }
