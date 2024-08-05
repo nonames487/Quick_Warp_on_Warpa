@@ -15,7 +15,7 @@ This script is executed on your Android phone in Termux software and finally giv
 Simply copy and paste this command, enter the number of IPs you need and that's it!
 
 ```bash
-curl -sSL https://raw.githubusercontent.com/azavaxhuman/Quick_Warp_on_Warp/main/install.sh -o install.sh && chmod +x install.sh && bash install.sh
+curl -sSL https://raw.githubusercontent.com/arshiacomplus/Quick_Warp_on_Warp/main/install.sh -o install.sh && chmod +x install.sh && bash install.sh
 
 ```
     
@@ -39,3 +39,4 @@ curl -sSL https://raw.githubusercontent.com/azavaxhuman/Quick_Warp_on_Warp/main/
 ## 🍰 Credit
 - [Yonggekkk](https://github.com/yonggekkk/warp-yg) : warp IP scanner
 - [Elfina Tech](https://github.com/Elfiinaa) : The Ideia about Warp-on-Warp and Config file
+- [arshiacomplus](https://github.com/arshiacomplus) : Update Api and config template 
