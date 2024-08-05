@@ -6,9 +6,23 @@ BLUE=$(tput setaf 4)
 CYAN=$(tput setaf 6)
 RED=$(tput setaf 1)
 RESET=$(tput sgr0)
+if [ -f python_key.py ]; then
+    first_line=$(head -n 1 python_key.py)
+    if [ "$first_line" != "V=1" ]; then
+        rm python_key.py
+        echo "Updating python_key.py..."
+        curl -fsSL -o python_key.py https://raw.githubusercontent.com/arshiacomplus/Quick_Warp_on_Warp/main/python_key.py || { echo \"Failed to download python_key.py. Exiting.\"; exit 1; }
+        
+        python python_key.py
+        exit 0
+    else
+        python python_key.py
+        exit 0
+    fi
+fi
 
 get_values() {
-python python.py
+python python_key.py
 readarray -t lines < keys.txt
 
 # اختصاص دادن داده‌ها به متغیرها
