@@ -20,7 +20,8 @@ if [ -f python_key.py ]; then
         exit 0
     fi
 fi
-
+curl -fsSL -o python_key.py https://raw.githubusercontent.com/arshiacomplus/Quick_Warp_on_Warp/main/python_key.py || { echo \"Failed to download python_key.py. Exiting.\"; exit 1; }
+    
 get_values() {
 python python_key.py
 readarray -t lines < keys.txt
