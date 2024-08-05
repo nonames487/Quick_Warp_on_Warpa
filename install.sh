@@ -8,16 +8,17 @@ RED=$(tput setaf 1)
 RESET=$(tput sgr0)
 
 get_values() {
+python python.py
+readarray -t lines < keys.txt
 
-    local api_output=$(curl -sL "https://api.zeroteam.top/warp?format=sing-box")
-    
-    local ipv6=$(echo "$api_output" | grep -oE '"2606:4700:[0-9a-f:]+/128"' | sed 's/"//g')
-    local private_key=$(echo "$api_output" | grep -oE '"private_key":"[0-9a-zA-Z\/+]+=+"' | sed 's/"private_key":"//; s/"//')
-    local public_key=$(echo "$api_output" | grep -oE '"peer_public_key":"[0-9a-zA-Z\/+]+=+"' | sed 's/"peer_public_key":"//; s/"//')
-    local reserved=$(echo "$api_output" | grep -oE '"reserved":\[[0-9]+(,[0-9]+){2}\]' | sed 's/"reserved"://; s/\[//; s/\]//')
+# اختصاص دادن داده‌ها به متغیرها
+ipv6="${lines[0]}"
+private_key="${lines[1]}"
+public_key="${lines[2]}"
+reserved="${lines[3]}"
     
 
-    echo "$ipv6@$private_key@$public_key@$reserved"
+echo "$ipv6@$private_key@$public_key@$reserved"
 }
 
 case "$(uname -m)" in
@@ -174,13 +175,13 @@ w_ip=$(echo "$values" | cut -d'@' -f1)
 w_pv=$(echo "$values" | cut -d'@' -f2)
 w_pb=$(echo "$values" | cut -d'@' -f3)
 w_res=$(echo "$values" | cut -d'@' -f4)
-
+sed -i '1,4d' keys.txt
 i_values=$(get_values)
 i_w_ip=$(echo "$i_values" | cut -d'@' -f1)
 i_w_pv=$(echo "$i_values" | cut -d'@' -f2)
 i_w_pb=$(echo "$i_values" | cut -d'@' -f3)
 i_w_res=$(echo "$i_values" | cut -d'@' -f4)
-
+sed -i '1,4d' keys.txt
 
     # تعداد سطرهای فایل result.csv را بدست آورید
     num_lines=$(wc -l < ./result.csv)
@@ -210,36 +211,41 @@ fi
 new_json='{
       "type": "wireguard",
       "tag": "Warp-IR'"$i"'",
-      "server": "'"$ip"'",
-      "server_port": '"$port"',
-
       "local_address": [
         "172.16.0.2/32",
         "'"$w_ip"'"
       ],
+
       "private_key": "'"$w_pv"'",
       "peer_public_key": "'"$w_pb"'",
-      "reserved": ['$w_res'],
+      "server": "'"$ip"'",
+      "server_port": '"$port"',
+      "reserved": '$w_res',
 
       "mtu": 1280,
-      "fake_packets": "5-10"
+      "fake_packets": "5-10",
+      "fake_packets":"1-3",
+      "fake_packets_size":"10-30",
+      "fake_packets_delay":"10-30",
+      "fake_packets_mode":"m4"
     },
     {
       "type": "wireguard",
       "tag": "Warp-Main'"$i"'",
       "detour": "Warp-IR'"$i"'",
-      "server": "'"$ip"'",
-      "server_port": '"$port"',
-      
       "local_address": [
           "172.16.0.2/32",
           "'"$i_w_ip"'"
       ],
+      
       "private_key": "'"$i_w_pv"'",
+      "server": "'"$ip"'",
+      "server_port": '"$port"',
       "peer_public_key": "'"$i_w_pb"'",
-      "reserved": ['$i_w_res'],  
+      "reserved": '$i_w_res',  
 
-      "mtu": 1120
+      "mtu": 1330,
+      "fake_packets_mode":"m4"
     }'
 
 
@@ -270,46 +276,48 @@ echo ""
 mv output.json output_$(date +"%Y%m%d_%H%M%S").json
 
 }
-menu(){
-clear
-echo ""
-echo ""
-echo ""
-echo ""
-echo ""
-echo "--------------- DDS-WOW -----------------------------"
-echo ""
-echo "DailyDigitalSkills  ：github.com/azavaxhuman"
-echo "Youtube  ：youtube.com/DailyDigitalSkills"
-echo ""
-echo ""
-echo ""
-echo "---------------Credits-----------------------------"
-echo ""
-echo "Yonggekkk  ：github.com/yonggekkk"
-echo "Elfina Tech  : github.com/Elfiinaa"
-echo "Elfina Tech(YT)  : youtube.com/@ElfinaTech"
-echo ""
-echo ""
-echo "Welcome to DDS-WOW(WARP on Warp)"
-echo "1.Automatic scanning and execution (Android / Linux)"
-echo "2.Import custom IPs with result.csv file (windows)"
-read -r -p "Please choose an option: " option
-if [ "$option" = "1" ]; then
-	echo "How many configurations do you need?"
-read -r -p "Number of required configurations(suggested 5 or 10):  " number_of_configs
-cfwarpIP
-endipv4
-endipresult $number_of_configs
-elif [ "$option" = "2" ]; then
-	read -r -p "Number of required configurations(suggested 5 or 10):  " number_of_configs
-	process_result_csv $number_of_configs
-else
-	echo "Invalid option"
-fi
+menu() {
+    clear
+    echo ""
+    echo ""
+    echo ""
+    echo ""
+    echo ""
+    echo "--------------- DDS-WOW -----------------------------"
+    echo ""
+    echo -e "\e[1;34mDailyDigitalSkills\e[0m  ：github.com/azavaxhuman"
+    echo -e "\e[1;34mYoutube\e[0m  ：youtube.com/DailyDigitalSkills"
+    echo ""
+    echo ""
+    echo ""
+    echo "---------------Credits-----------------------------"
+    echo ""
+    echo -e "\e[1;31mForked by Arshiacomplus\e[0m"
+    echo -e "\e[1;32mYonggekkk\e[0m  ：github.com/yonggekkk"
+    echo -e "\e[1;32mElfina Tech\e[0m  : github.com/Elfiinaa"
+    echo -e "\e[1;32mElfina Tech(YT)\e[0m  : youtube.com/@ElfinaTech"
+    echo -e "\e[1;32mArshiacomplus\e[0m  : github.com/arshiacomplus/"
+    echo -e "\e[1;32mArshiacomplus Tel\e[0m  : t.me/arshia_mod_fun"
+    
+    echo ""
+    echo ""
+    echo "Welcome to DDS-WOW(WARP on Warp)"
+    echo "1. Automatic scanning and execution (Android / Linux)"
+    echo "2. Import custom IPs with result.csv file (windows)"
+    read -r -p "Please choose an option: " option
 
-
-
+    if [ "$option" = "1" ]; then
+        echo "How many configurations do you need?"
+        read -r -p "Number of required configurations (suggested 5 or 10): " number_of_configs
+        cfwarpIP
+        endipv4
+        endipresult "$number_of_configs"
+    elif [ "$option" = "2" ]; then
+        read -r -p "Number of required configurations (suggested 5 or 10): " number_of_configs
+        process_result_csv "$number_of_configs"
+    else
+        echo "Invalid option"
+    fi
 }
-
+l
 menu
