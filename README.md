@@ -21,7 +21,7 @@ curl -sSL https://raw.githubusercontent.com/arshiacomplus/Quick_Warp_on_Warp/mai
 
 or 
 ```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/nonames487/Quick_Warp_on_Warp/main/install.sh)
+bash <(curl -fsSL https://raw.githubusercontent.com/nonames487/Quick_Warp_on_Warpa/main/install.sh)
 ```
 ## ⚡ Implementation requirements
 
