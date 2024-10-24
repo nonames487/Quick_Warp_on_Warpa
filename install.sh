@@ -23,7 +23,7 @@ else
 
 fi
 get_values() {
-python python_key.py
+python3 python_key.py
 readarray -t lines < keys.txt
 
 # اختصاص دادن داده‌ها به متغیرها
