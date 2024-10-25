@@ -64,7 +64,7 @@ fi
 
 endipv4(){
 	n=0
-	iplist=100
+	iplist=200
 	while true
 	do
 		temp[$n]=$(echo 162.159.192.$(($RANDOM%256)))
@@ -243,26 +243,7 @@ new_json='{
       "fake_packets_size":"10-30",
       "fake_packets_delay":"10-30",
       "fake_packets_mode":"m4"
-    },
-    {
-      "type": "wireguard",
-      "tag": "Warp-Main'"$i"'",
-      "detour": "Warp-IR'"$i"'",
-      "local_address": [
-          "172.16.0.2/32",
-          "'"$i_w_ip"'"
-      ],
-      
-      "private_key": "'"$i_w_pv"'",
-      "server": "'"$ip"'",
-      "server_port": '"$port"',
-      "peer_public_key": "'"$i_w_pb"'",
-      "reserved": '$i_w_res',  
-
-      "mtu": 1330,
-      "fake_packets_mode":"m4"
     }'
-
 
     temp_json+="$new_json"
     # اضافه کردن خط خالی به محتوای متغیر موقت
