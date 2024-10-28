@@ -298,17 +298,17 @@ menu() {
     echo ""
     echo ""
     echo "Welcome to DDS-WOW(WARP on Warp)"
-    echo "1. Automatic scanning and execution (Android / Linux)"
-    echo "2. Import custom IPs with result.csv file (windows)"
+    echo "8. Automatic scanning and execution (Android / Linux)"
+    echo "9. Import custom IPs with result.csv file (windows)"
     read -r -p "Please choose an option: " option
 
-    if [ "$option" = "1" ]; then
+    if [ "$option" = "8" ]; then
         echo "How many configurations do you need?"
         read -r -p "Number of required configurations (suggested 1 or 5): " number_of_configs
         cfwarpIP
         endipv4
         endipresult "$number_of_configs"
-    elif [ "$option" = "2" ]; then
+    elif [ "$option" = "9" ]; then
         read -r -p "Number of required configurations (suggested 1 or 5): " number_of_configs
         process_result_csv "$number_of_configs"
     else
